@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_1_max_min", "0_1_max_min\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_2_swap", "0_2_swap\0_2_swap.vcxproj", "{2890FC53-E000-43F0-BFC7-45F8CAC9B32F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_3_array_rotation", "0_3_array_rotation\0_3_array_rotation.vcxproj", "{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{2890FC53-E000-43F0-BFC7-45F8CAC9B32F}.Release|x64.Build.0 = Release|x64
 		{2890FC53-E000-43F0-BFC7-45F8CAC9B32F}.Release|x86.ActiveCfg = Release|Win32
 		{2890FC53-E000-43F0-BFC7-45F8CAC9B32F}.Release|x86.Build.0 = Release|Win32
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Debug|x64.ActiveCfg = Debug|x64
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Debug|x64.Build.0 = Debug|x64
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Debug|x86.ActiveCfg = Debug|Win32
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Debug|x86.Build.0 = Debug|Win32
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Release|x64.ActiveCfg = Release|x64
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Release|x64.Build.0 = Release|x64
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Release|x86.ActiveCfg = Release|Win32
+		{D1C71386-4B5E-4B3D-AF75-04C9A8B4D341}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
