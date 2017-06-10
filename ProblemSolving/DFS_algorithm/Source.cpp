@@ -1,62 +1,48 @@
 #include <stdio.h>
 
-#define MAX_VERTEX 30
+int T, vertex, edge, start, end, v1, v2, min;
+int map[31][31];
+int visit[31];
 
-int map[MAX_VERTEX][MAX_VERTEX];
-int visit[MAX_VERTEX];
-int vertex;
-int edge;
-int maxEdge;
-int start;
-int end;
-
-void depthFirstSearch(int v, int depth)
+void dfs(int v, int depth)
 {
-	int i;
+	visit[v] = 1;
 	if (v == end)
 	{
-		if (maxEdge < 0 || depth < maxEdge)
-		{
-			maxEdge = depth;
-		}
+		if (-1 == min || depth < min)
+			min = depth;
 		return;
 	}
-
-	visit[v] = 1;
-	for (i = 1; i <= vertex; i++)
+	for (int i = 1; i <= vertex; i++)
 	{
-		if (map[v][i] == 1 && !visit[i])
+		if (1 == map[v][i] && 0 == visit[i])
 		{
-			depthFirstSearch(i, depth + 1);
+			dfs(i, depth + 1);
 			visit[i] = 0;
 		}
 	}
 }
 
-
-int main(void)
+int main()
 {
-	int T;
-	int test_case;
-	int i;
-	int v1;
-	int v2;
-
 	scanf("%d", &T);
-
-	for (test_case = 1; test_case <= T; test_case++)
+	for (int tc = 1; tc <= T; tc++)
 	{
 		scanf("%d %d %d %d", &vertex, &edge, &start, &end);
-
-		for (i = 0; i < edge; i++)
+		for (int i = 1; i < vertex; i++)
+		{
+			for (int j = 1; j < vertex; j++)
+				map[i][j] = 0;
+			visit[i] = 0;
+		}
+		for (int i = 0; i < edge; i++)
 		{
 			scanf("%d %d", &v1, &v2);
 			map[v1][v2] = 1;
 		}
-
-		maxEdge = -1;
-		depthFirstSearch(start, 0);
-		printf("#%d %d\n", test_case, maxEdge);
+		min = -1;
+		dfs(start, 0);
+		printf("#%d %d\n", tc, min);
 	}
 	return 0;
 }
