@@ -1,132 +1,134 @@
 #include <stdio.h>
 #include <malloc.h>
 
-typedef struct adjlistNode
+int T, V, E, Q, v1, v2, q1;
+
+typedef struct node
 {
 	int vertex;
-	adjlistNode *next;
-} AdjlistNode;
+	node *next;
+} Node;
 
 typedef struct
 {
-	int num_members;
-	AdjlistNode *head;
-	AdjlistNode *tail;
-} AdjList;
+	int num;
+	Node *head;
+	Node *tail;
+} List;
 
 typedef struct
 {
-	int num_vertices;
-	AdjList * adjListArr;
+	int num;
+	List *list;
 } Graph;
 
-AdjlistNode* createNode(int v)
+Node* createNode(int v)
 {
-	AdjlistNode *newNode = (AdjlistNode *)malloc(sizeof(AdjlistNode));
-
+	Node *newNode = (Node*)malloc(sizeof(Node));
 	newNode->vertex = v;
 	newNode->next = NULL;
-
 	return newNode;
 }
 
 Graph* createGraph(int n)
 {
 	Graph *graph = (Graph*)malloc(sizeof(Graph));
-	graph->num_vertices = n;
-
-	graph->adjListArr = (AdjList *)malloc(n * sizeof(AdjList));
-
+	graph->num = n;
+	graph->list = (List*)malloc(sizeof(List)*n);
 	for (int i = 0; i < n; i++)
 	{
-		graph->adjListArr[i].head = graph->adjListArr[i].tail = NULL;
-		graph->adjListArr[i].num_members = 0;
+		graph->list[i].num = 0;
+		graph->list[i].head = graph->list[i].tail = NULL;
 	}
 	return graph;
+}
+
+void addEdge(Graph *graph, int v1, int v2)
+{
+	Node *newNode = createNode(v2);
+	if (graph->list[v1].tail != NULL)
+	{
+		graph->list[v1].tail->next = newNode;
+		graph->list[v1].tail = newNode;		
+	}
+	else
+	{
+		graph->list[v1].tail = graph->list[v1].head = newNode;
+	}
+	graph->list[v1].num++;
+
+	newNode = createNode(v1);
+	if (graph->list[v2].tail != NULL)
+	{
+		graph->list[v2].tail->next = newNode;
+		graph->list[v2].tail = newNode;
+	}
+	else
+	{
+		graph->list[v2].tail = graph->list[v2].head = newNode;
+	}
+	graph->list[v2].num++;
+}
+
+void displayGraph(Graph *graph, int v)
+{
+	Node *nodePtr = graph->list[v].head;
+	while (nodePtr)
+	{
+		printf("%d ", nodePtr->vertex);
+		nodePtr = nodePtr->next;
+	}
+	printf("\n");
 }
 
 void destroyGraph(Graph *graph)
 {
 	if (graph)
 	{
-		if (graph->adjListArr)
+		if (graph->list)
 		{
-			for (int v = 0; v < graph->num_vertices; v++)
+			for (int i = 0; i < graph->list->num; i++)
 			{
-				AdjlistNode *adjListPtr = graph->adjListArr[v].head;
-				while (adjListPtr)
+				Node *node = graph->list[i].head;
+				while (node)
 				{
-					AdjlistNode *tmp = adjListPtr;
-					adjListPtr = adjListPtr->next;
+					Node *tmp = node;
+					node = node->next;
 					free(tmp);
 				}
 			}
-			free(graph->adjListArr);
+			free(graph->list);
 		}
 		free(graph);
 	}
 }
 
-void addEdge(Graph *graph, int src, int dest)
-{
-	AdjlistNode * newNode = createNode(dest);
-	if (graph->adjListArr[src].tail != NULL)
-	{
-		graph->adjListArr[src].tail->next = newNode;
-		graph->adjListArr[src].tail = newNode;
-	}
-	else
-	{
-		graph->adjListArr[src].head = graph->adjListArr[src].tail = newNode;
-	}
-	graph->adjListArr[src].num_members++;
-
-	newNode = createNode(src);
-	if (graph->adjListArr[dest].tail != NULL)
-	{
-		graph->adjListArr[dest].tail->next = newNode;
-		graph->adjListArr[dest].tail = newNode;
-	}
-	else
-	{
-		graph->adjListArr[dest].head = graph->adjListArr[dest].tail = newNode;
-	}
-	graph->adjListArr[dest].num_members++;
-}
-
-void displayGraph(Graph *graph, int i)
-{
-	AdjlistNode * adjListPtr = graph->adjListArr[i].head;
-	while (adjListPtr)
-	{
-		printf("%d ", adjListPtr->vertex);
-		adjListPtr = adjListPtr->next;
-	}
-	printf("\n");
-}
-
 int main()
 {
-	int T, V, E, Q, sv, ev;
 	scanf("%d", &T);
-
-	for (int test_case = 1; test_case <= T; test_case++)
+	for (int tc = 1; tc <= T; tc++)
 	{
+		printf("#%d\n", tc);
 		scanf("%d %d %d", &V, &E, &Q);
 		Graph *graph = createGraph(V);
-
 		for (int i = 0; i < E; i++)
 		{
-			scanf("%d %d", &sv, &ev);
-			addEdge(graph, sv, ev);
+			scanf("%d %d", &v1, &v2);
+			addEdge(graph, v1, v2);
 		}
-		printf("#%d\n", test_case);
-
 		for (int i = 0; i < Q; i++)
 		{
-			scanf("%d", &sv);
-			displayGraph(graph, sv);
+			scanf("%d", &q1);
+			displayGraph(graph, q1);
 		}
+		destroyGraph(graph);
 	}
 	return 0;
 }
+
+
+
+
+
+
+
